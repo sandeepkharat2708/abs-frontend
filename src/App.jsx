@@ -4,7 +4,8 @@ import {
   Container, Typography, Paper, Button, Table, TableHead,
   TableRow, TableCell, TableBody, Dialog, DialogTitle,
   DialogContent, DialogActions, TextField, Stack,
-  Chip, IconButton, AppBar, Toolbar, Card, CardContent, Grid
+  Chip, IconButton, AppBar, Toolbar, Card, CardContent, Grid,
+  Snackbar, Alert
 } from "@mui/material";
 import { Edit, Delete, Add } from "@mui/icons-material";
 
@@ -29,6 +30,13 @@ export default function App() {
   const [deleteId, setDeleteId] = useState(null);
   const [search, setSearch] = useState("");
 
+  // ⭐ Snackbar state
+  const [snack, setSnack] = useState({
+    open: false,
+    message: "",
+    severity: "success"
+  });
+
   const fetchData = async () => {
     const res = await axios.get(API);
     setAppointments(res.data);
@@ -50,18 +58,38 @@ export default function App() {
     setOpen(true);
   };
 
+  // ⭐ ADD / EDIT
   const handleSubmit = async () => {
-    if (editingId)
+    if (editingId) {
       await axios.put(`${API}/${editingId}`, form);
-    else
+      setSnack({
+        open: true,
+        message: "Appointment updated successfully",
+        severity: "success"
+      });
+    } else {
       await axios.post(API, form);
+      setSnack({
+        open: true,
+        message: "Appointment added successfully",
+        severity: "success"
+      });
+    }
 
     setOpen(false);
     fetchData();
   };
 
+  // ⭐ DELETE
   const handleDelete = async () => {
     await axios.delete(`${API}/${deleteId}`);
+
+    setSnack({
+      open: true,
+      message: "Appointment deleted successfully",
+      severity: "success"
+    });
+
     setDeleteId(null);
     fetchData();
   };
@@ -96,30 +124,24 @@ export default function App() {
         {/* DASHBOARD CARDS */}
         <Grid container spacing={2} sx={{ mb: 3 }}>
           <Grid item xs={12} md={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6">Total</Typography>
-                <Typography variant="h4">{total}</Typography>
-              </CardContent>
-            </Card>
+            <Card><CardContent>
+              <Typography variant="h6">Total</Typography>
+              <Typography variant="h4">{total}</Typography>
+            </CardContent></Card>
           </Grid>
 
           <Grid item xs={12} md={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6">Completed</Typography>
-                <Typography variant="h4">{completed}</Typography>
-              </CardContent>
-            </Card>
+            <Card><CardContent>
+              <Typography variant="h6">Completed</Typography>
+              <Typography variant="h4">{completed}</Typography>
+            </CardContent></Card>
           </Grid>
 
           <Grid item xs={12} md={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6">Cancelled</Typography>
-                <Typography variant="h4">{cancelled}</Typography>
-              </CardContent>
-            </Card>
+            <Card><CardContent>
+              <Typography variant="h6">Cancelled</Typography>
+              <Typography variant="h4">{cancelled}</Typography>
+            </CardContent></Card>
           </Grid>
         </Grid>
 
@@ -199,37 +221,26 @@ export default function App() {
 
         <DialogContent>
           <Stack spacing={2} sx={{ mt: 1 }}>
-            <TextField label="Patient Name"
-              name="patient_name" value={form.patient_name}
-              onChange={handleChange} />
+            <TextField label="Patient Name" name="patient_name"
+              value={form.patient_name} onChange={handleChange} />
 
-            <TextField label="Doctor Name"
-              name="doctor_name" value={form.doctor_name}
-              onChange={handleChange} />
+            <TextField label="Doctor Name" name="doctor_name"
+              value={form.doctor_name} onChange={handleChange} />
 
-            <TextField type="date"
-              name="appointment_date"
-              value={form.appointment_date}
-              onChange={handleChange} />
+            <TextField type="date" name="appointment_date"
+              value={form.appointment_date} onChange={handleChange} />
 
-            <TextField type="time"
-              name="appointment_time"
-              value={form.appointment_time}
-              onChange={handleChange} />
+            <TextField type="time" name="appointment_time"
+              value={form.appointment_time} onChange={handleChange} />
 
-            <TextField label="Reason"
-              name="reason" value={form.reason}
-              onChange={handleChange} />
+            <TextField label="Reason" name="reason"
+              value={form.reason} onChange={handleChange} />
 
-            <TextField type="number"
-              label="Fee"
-              name="fee" value={form.fee}
-              onChange={handleChange} />
+            <TextField type="number" label="Fee" name="fee"
+              value={form.fee} onChange={handleChange} />
 
             <TextField
-              select
-              label="Status"
-              name="status"
+              select label="Status" name="status"
               value={form.status}
               onChange={handleChange}
               SelectProps={{ native: true }}
@@ -259,6 +270,23 @@ export default function App() {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* ⭐ SUCCESS POPUP */}
+      <Snackbar
+        open={snack.open}
+        autoHideDuration={3000}
+        onClose={() => setSnack({ ...snack, open: false })}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert
+          severity={snack.severity}
+          variant="filled"
+          onClose={() => setSnack({ ...snack, open: false })}
+        >
+          {snack.message}
+        </Alert>
+      </Snackbar>
+
     </>
   );
 }
