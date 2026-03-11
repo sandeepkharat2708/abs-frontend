@@ -1,0 +1,200 @@
+.appointments-card{
+
+width:90%;
+margin:40px auto;
+background:white;
+padding:30px;
+border-radius:10px;
+
+box-shadow:0 10px 30px rgba(0,0,0,0.15);
+
+}
+
+.appointments-card h2{
+
+margin-bottom:20px;
+color:#333;
+
+}
+
+/* Table */
+
+.appointments-table{
+
+width:100%;
+border-collapse:collapse;
+
+}
+
+.appointments-table th{
+
+background:#098686;
+color:white;
+padding:12px;
+text-align:left;
+
+}
+
+.appointments-table td{
+
+padding:12px;
+border-bottom:1px solid #eee;
+
+}
+
+.appointments-table tr:hover{
+
+background:#f9f9f9;
+
+}
+
+/* Status */
+
+.status{
+
+padding:5px 10px;
+border-radius:20px;
+font-size:12px;
+font-weight:600;
+
+}
+
+.status.scheduled{
+
+background:#e3f2fd;
+color:#1976d2;
+
+}
+
+.status.completed{
+
+background:#e8f5e9;
+color:#2e7d32;
+
+}
+
+.status.cancelled{
+
+background:#ffebee;
+color:#c62828;
+
+}
+
+/* Days left */
+
+.urgent{
+
+color:red;
+font-weight:bold;
+
+}
+
+/* Buttons */
+
+.edit-btn{
+
+background:#03a9f4;
+border:none;
+color:white;
+padding:6px 12px;
+margin-right:6px;
+border-radius:5px;
+cursor:pointer;
+
+}
+
+.delete-btn{
+
+background:#e53935;
+border:none;
+color:white;
+padding:6px 12px;
+border-radius:5px;
+cursor:pointer;
+
+}
+
+.edit-btn:hover{
+
+background:#0288d1;
+
+}
+
+.delete-btn:hover{
+
+background:#c62828;
+
+}
+
+/* Edit input fields */
+
+.edit-input{
+
+width:100%;
+padding:6px 8px;
+
+border:1px solid #ccc;
+border-radius:5px;
+
+font-size:14px;
+
+transition:0.3s;
+
+}
+
+.edit-input:focus{
+
+border-color:#2196f3;
+outline:none;
+
+box-shadow:0 0 5px rgba(33,150,243,0.4);
+
+}
+
+
+/* Save button */
+
+.save-btn{
+
+background:#4CAF50;
+border:none;
+color:white;
+
+padding:6px 12px;
+
+border-radius:5px;
+cursor:pointer;
+
+margin-right:6px;
+
+font-weight:600;
+
+}
+
+.save-btn:hover{
+
+background:#388e3c;
+
+}
+
+
+/* Cancel button */
+
+.cancel-btn{
+
+background:#757575;
+border:none;
+color:white;
+
+padding:6px 12px;
+
+border-radius:5px;
+cursor:pointer;
+
+}
+
+.cancel-btn:hover{
+
+background:#616161;
+
+}
